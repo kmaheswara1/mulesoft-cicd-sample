@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="557a5fa9-9f9a-488a-8289-9ec9d638b003" basePath="/timezone" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="4f095454-2728-45ca-9ef3-06f06f458ded" basePath="api/timezone" >
+		<http:request-connection host="worldtimeapi.org" />
+	</http:request-config>
+	<flow name="error-handling-demoFlow" doc:id="18a023f6-bfd7-4aaa-a56f-122fd873cac7" >
+		<http:listener doc:name="Listener" doc:id="42975bbb-ec30-48ed-842a-73a76a43da6a" config-ref="HTTP_Listener_config" path="/{region}/{city}" outputMimeType="application/json; streaming=true">
+			<http:error-response >
+				<http:body ><![CDATA[#[payload]]]></http:body>
+			</http:error-response>
+		</http:listener>
+		<logger level="INFO" doc:name="Logger" doc:id="31269675-dfe8-4d32-9b8d-f4648b4e3cf3" message="#[(attributes.uriParams.region default '') ++ (attributes.uriParams.city default '')]"/>
+		<http:request method="GET" doc:name="Request" doc:id="e3f50f97-e5d8-4d59-b217-e8cc8fab9797" config-ref="HTTP_Request_configuration" path="/{region}/{city}">
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	city : attributes.uriParams.city,
+	region : attributes.uriParams.region
+}]]]></http:uri-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="4c46e1ef-869e-4ec3-beac-b9381783e1a0" >
+			<ee:message >
+				<ee:set-payload resource="dataweave/dwscripts.dwl" />
+			</ee:message>
+		</ee:transform>
+		<error-handler ref="globalError_Handler" />
+	</flow>
+</mule>
