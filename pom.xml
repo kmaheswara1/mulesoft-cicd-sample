@@ -43,7 +43,7 @@
             <muleVersion>4.2.2</muleVersion>
             <username>kmaheswara</username>
             <password>Password!1</password>
-            <applicationName>error-handling-demo</applicationName>
+            <applicationName>error-handling-demo1</applicationName>
             <environment>Sandbox</environment>
             <workerType>MICRO</workerType>
             <objectStoreV2>true</objectStoreV2>
