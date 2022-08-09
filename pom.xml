@@ -6,61 +6,57 @@
 	<artifactId>error-handling-demo</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>mule-application</packaging>
-
 	<name>error-handling-demo</name>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
 		<app.runtime>4.4.0-20220221</app.runtime>
 		<mule.maven.plugin.version>3.5.4</mule.maven.plugin.version>
 	</properties>
-
 	<build>
 		<plugins>
 		<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-install-plugin</artifactId>
-    <version>2.5.2</version>
-</plugin>
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-deploy-plugin</artifactId>
-    <version>2.8.2</version>
-</plugin>		 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>3.0.0</version>
-			</plugin>
-			<plugin>
+    		<groupId>org.apache.maven.plugins</groupId>
+    		<artifactId>maven-install-plugin</artifactId>
+    		<version>2.5.2</version>
+		</plugin>
+		<plugin>
+    		<groupId>org.apache.maven.plugins</groupId>
+    		<artifactId>maven-deploy-plugin</artifactId>
+    		<version>2.8.2</version>
+		</plugin>		 
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-clean-plugin</artifactId>
+			<version>3.0.0</version>
+		</plugin>
+		<plugin>
     	    <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-resources-plugin</artifactId>
             <version>3.1.0</version>
-			</plugin>   
-			<plugin>
-				<groupId>org.mule.tools.maven</groupId>
-				<artifactId>mule-maven-plugin</artifactId>
-				<!-- <version>${mule.maven.plugin.version}</version> -->
-				<version>4.2.2</version>
-				<extensions>true</extensions>							
-					<configuration>
-        <cloudHubDeployment>
-            <uri>https://anypoint.mulesoft.com</uri>
-            <muleVersion>4.2.2</muleVersion>
-            <username>kmaheswara</username>
-            <password>Password!1</password>
-            <applicationName>error-handling-demo1</applicationName>
-            <environment>Sandbox</environment>
-            <workerType>MICRO</workerType>
-            <objectStoreV2>true</objectStoreV2>
-        </cloudHubDeployment>
-    </configuration>
-			</plugin>
+		</plugin>   
+		<plugin>
+			<groupId>org.mule.tools.maven</groupId>
+			<artifactId>mule-maven-plugin</artifactId>
+			<version>${mule.maven.plugin.version}</version>
+			<extensions>true</extensions>							
+		<configuration>
+        	<cloudHubDeployment>
+            	<uri>https://anypoint.mulesoft.com</uri>
+            	<muleVersion>4.4.0</muleVersion>
+            	<username>kmaheswara</username>
+            	<password>Password!1</password>
+            	<applicationName>error-handling-demo1</applicationName>
+	            <environment>Sandbox</environment>
+    	        <workerType>MICRO</workerType>
+				<workers>1</workers>
+				<region>us-east-2</region>
+            	<objectStoreV2>true</objectStoreV2>
+        	</cloudHubDeployment>
+    	</configuration>
+		</plugin>
 		</plugins>
 	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.mule.connectors</groupId>
@@ -73,12 +69,8 @@
 			<artifactId>mule-sockets-connector</artifactId>
 			<version>1.2.2</version>
 			<classifier>mule-plugin</classifier>
-		</dependency>
-		
-	</dependencies>
-	
-	
-
+		</dependency>		
+	</dependencies>	
 	<repositories>
 		<repository>
 			<id>anypoint-exchange-v3</id>
@@ -93,7 +85,6 @@
 			<layout>default</layout>
 		</repository>
 	</repositories>
-
 	<pluginRepositories>
 		<pluginRepository>
 			<id>mulesoft-releases</id>
@@ -107,9 +98,6 @@
 		 <pluginRepository>
     <id>mule-public</id>
     <url>https://repository.mulesoft.org/nexus/content/repositories/releases</url>
-  </pluginRepository>
-		
+  </pluginRepository>		
 	</pluginRepositories>
-	
-
 </project>
